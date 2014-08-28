@@ -1,0 +1,11 @@
+#! /usr/bin/env ruby
+# Replaces invalid utf-8 characters with �.
+#
+# Usage:
+# $ cat some_file | string_encoder
+
+while input = gets
+  next unless input
+  string = String.new(input)
+  puts string.encode('UTF-8', 'binary', invalid: :replace, undef: :replace)
+end

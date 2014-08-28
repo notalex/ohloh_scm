@@ -143,6 +143,37 @@ module Scm::Adapters
 											'75532c1e1f1de55c2271f6fd29d98efbe35397c4'], commits.collect { |c| c.token }
 			end
 		end
+
+    def test_open_log_file_encoding
+      with_hg_repository('hg_invalid_utf8') do |hg|
+        hg.open_log_file do |io|
+          log = File.read(io)
+          assert_equal true, log.valid_encoding?
+        end
+      end
+    end
+
+    def test_log_encoding
+      with_hg_repository('hg_invalid_utf8') do |hg|
+        assert_equal true, hg.log.valid_encoding?
+      end
+    end
+
+    def test_commits_encoding
+      with_hg_repository('hg_invalid_utf8') do |hg|
+        assert_nothing_raised do
+          hg.commits
+        end
+      end
+    end
+
+    def test_verbose_commit_encoding
+      with_hg_repository('hg_invalid_utf8') do |hg|
+        assert_nothing_raised do
+          hg.verbose_commit('51ea5277ca27')
+        end
+      end
+    end
 	end
 end
 

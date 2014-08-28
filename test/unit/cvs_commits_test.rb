@@ -32,5 +32,14 @@ module Scm::Adapters
 				end
 			end
 		end
+
+    def test_commits_valid_encoding
+      # TODO: Replace with local repository.
+      cvs = Scm::Adapters::CvsAdapter.new(url: ':pserver:anonymous:@vrecognition.cvs.sourceforge.net:/cvsroot/vrecognition', module_name: 'vrecognition')
+
+      assert_nothing_raised do
+        cvs.commits
+      end
+    end
 	end
 end
