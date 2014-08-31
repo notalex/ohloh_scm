@@ -127,5 +127,18 @@ module Scm::Adapters
       end
     end
 
+    def test_log_encoding
+      with_git_repository('git_with_invalid_encoding') do |git|
+        assert_equal true, git.log.valid_encoding?
+      end
+    end
+
+    def test_open_log_file_encoding
+      with_git_repository('git_with_invalid_encoding') do |git|
+        assert_nothing_raised do
+          git.open_log_file {}
+        end
+      end
+    end
 	end
 end
